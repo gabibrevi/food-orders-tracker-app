@@ -1,11 +1,11 @@
 'use client'
-import useSWR from 'swr'
-import OrderCard from '@/components/order/OrderCard'
-import Heading from '@/components/ui/Heading'
+import LatestOrderItem from '@/components/order/LatestOrderItem'
+import Logo from '@/components/ui/Logo'
 import { OrderWithProducts } from '@/src/types'
+import useSWR from 'swr'
 
 export default function OrdersPage() {
-    const url = '/admin/orders/api'
+    const url = '/orders/api'
 
     const fetcher = () =>
         fetch(url)
@@ -21,16 +21,18 @@ export default function OrdersPage() {
     if (data)
         return (
             <>
-                <Heading>Orders List</Heading>
+                <h1 className=' text-center mt-20  text-6xl font-black'>Pick up your order!</h1>
+
+                <Logo />
 
                 {data.length ? (
-                    <div className=' grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 mt-5'>
+                    <div className=' grid grid-cols-2 gap-5 max-w-5xl mx-auto mt-10 '>
                         {data.map((order) => (
-                            <OrderCard key={order.id} order={order}></OrderCard>
+                            <LatestOrderItem key={order.id} order={order} />
                         ))}
                     </div>
                 ) : (
-                    <p>No orders</p>
+                    <p className='text-center my-10'>Nothing ready</p>
                 )}
             </>
         )
